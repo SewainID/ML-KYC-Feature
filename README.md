@@ -33,6 +33,10 @@ source .venv/Scripts/activate
 ``` 
 
 - 3. (kerjain fiturnya)
+- P.S (Kalau mau untuk memasukan depedency library pada requirements.tx)
+```
+pip freeze > requirements.txt
+```
 
 - 4. add dan commit
 
