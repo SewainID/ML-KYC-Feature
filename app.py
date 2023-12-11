@@ -7,7 +7,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Load the trained model
-model = load_model('new_anime_classification.h5')
+model = load_model('new_anime_classification2')
 
 @app.route('/')
 def index():
