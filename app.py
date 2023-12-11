@@ -3,11 +3,16 @@ import os
 from keras.models import load_model
 from keras.preprocessing import image
 import numpy as np
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.config['ALLOWED_EXTENSION'] = set({'png', 'jpg', 'jpeg'})
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSION']
 
 # Load the trained model
-model = load_model('new_anime_classification.h5')
+model = load_model('new_anime_classification2.h5')
 
 @app.route('/')
 def index():
