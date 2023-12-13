@@ -75,7 +75,7 @@ def predict():
             return jsonify({
                 "status": {
                     "code": 400,
-                    "message": "Bad Request",
+                    "message": "Invalid file format. Please upload a PNG, JPG, or JPEG image",
                 },
                 "data": None,
             }), 400
