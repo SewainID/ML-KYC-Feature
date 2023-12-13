@@ -1,0 +1,18 @@
+# Exclude "build-time" ignore files.
+.dockerignore
+.gcloudignore
+
+# Exclude git history and configuration.
+.gitignore
+
+# Include the Dockerfile in the build
+!Dockerfile
+
+# Exclude the README in the build
+README.md
+
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
