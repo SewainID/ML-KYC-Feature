@@ -11,9 +11,9 @@ name: Build and Deploy Machine Learning APIs to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 env:
   PROJECT_ID: sewain-405712
@@ -23,7 +23,6 @@ env:
 
 jobs:
   deploy:
-    # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -33,7 +32,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # NOTE: Alternative option - authentication via credentials json
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v1'
@@ -42,11 +40,11 @@ jobs:
 
       - name: Build and Push Container
         run: |-
+          echo '${{ secrets.SA_CREDS }}' > /tmp/account.json
+          gcloud auth activate-service-account --key-file=/tmp/account.json
           gcloud auth configure-docker asia-southeast1-docker.pkg.dev --quiet
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}" ./
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}"
-
-      # END - Docker auth and build
+          docker build -t "asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}" ./
+          docker push "asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}"
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -54,10 +52,8 @@ jobs:
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          # NOTE: If using a pre-built image, update the image name here
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}
-          flags: "--allow-unauthenticated --vpc-connector sewain-be"
+          image: 'asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}'
+          flags: '--allow-unauthenticated --vpc-connector sewain-be'
 
-      # If required, use the Cloud Run url output in later steps
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
