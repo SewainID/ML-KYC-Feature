@@ -17,7 +17,7 @@ on:
 
 env:
   PROJECT_ID: sewain-405712
-  GAR_LOCATION: asia-southeast2
+  GAR_LOCATION: asia-southeast1
   SERVICE: image-classification-api
   REGION: asia-southeast2
 
