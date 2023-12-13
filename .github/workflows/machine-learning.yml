@@ -2,9 +2,9 @@ name: Build and Deploy Machine Learning APIs to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 env:
   PROJECT_ID: sewain-405712
   GAR_LOCATION: asia-southeast2
@@ -30,7 +30,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev
+          gcloud auth configure-docker asia-southeast2-docker.pkg.dev
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ secrets.GAR_REPO }}/machine-learning-api:${{ github.sha }}"
 
