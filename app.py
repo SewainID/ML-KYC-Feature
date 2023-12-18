@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['ALLOWED_EXTENSION'] = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['LABELS_FILE'] = 'labels.txt'
-app.config['MODEL_FILE'] = 'new_anime_classification.h5'
+app.config['MODEL_FILE'] = 'new_anime_classificationL.h5'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -47,7 +47,22 @@ def index():
             "code": 200,
             "message": "Welcome to Anime Classification API",
         },
-        "data": None
+        "data": {
+            'Project_Name': 'SewaIN',
+            'Team': 'CH2-PS129',
+            'Tema': 'SME Empowerment',
+            'Anggota': [
+                {'Bangkit ID': 'A013BSY1946', 'Nama': 'Muhammad Rizki Firmansyah', 'Asal': 'Universitas Terbuka'},
+                {'Bangkit ID': 'A132BSY2440', 'Nama': 'Ahmad Rayhan', 'Asal': 'Politeknik Negeri Padang'},
+                {'Bangkit ID': 'M299BSX0619', 'Nama': 'Alya Clarissa Z', 'Asal': 'Universitas Pendidikan Indonesia'},
+                {'Bangkit ID': 'M287BSY1467', 'Nama': 'Muhammad Leon Fadillah', 'Asal': 'Universitas Pakuan'},
+                {'Bangkit ID': 'M204BSY1107', 'Nama': 'Leon Eleazar', 'Asal': 'Universitas Esa Unggul'},
+                {'Bangkit ID': 'C287BSY3649', 'Nama': 'Sandy Budi Wirawan', 'Asal': 'Universitas Pakuan'},
+                {'Bangkit ID': 'C287BSY3662', 'Nama': 'Saidina Hikam', 'Asal': 'Universitas Pakuan'},
+            ],
+            'Created_By': 'Sewain Team',
+            'CopyRight': '@2023 All Right Reserved!!'
+        }
     }), 200
 
 @app.route("/prediction", methods=["GET","POST"])
